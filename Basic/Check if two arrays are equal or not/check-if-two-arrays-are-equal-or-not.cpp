@@ -14,16 +14,38 @@ class Solution{
     //Function to check if two arrays are equal or not.
     bool check(vector<ll> A, vector<ll> B, int N) {
         //code here
-      sort( A.begin() , A.end() );
-      sort( B.begin() , B.end() );
-      for(int i = 0 ; i < N ; i++ )
-      {
-          if ( A[i] != B[i] )
-          {
-              return false ;
-          }
-      }
-      return true ; 
+        
+        unordered_map< ll , ll > mp;
+        
+        
+        for(int i = 0; i < N; i++ )
+        {
+            mp[A[i]]++;
+        }
+        
+        
+        for(int i = 0; i < N; i++ )
+        {
+            if( mp.find(B[i]) != mp.end() )
+            {
+                auto itr = mp.find(B[i]);
+                
+                if( itr->second > 0 )
+                {
+                    itr->second--;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 };
 
