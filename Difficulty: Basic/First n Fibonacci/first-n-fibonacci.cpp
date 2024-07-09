@@ -15,34 +15,15 @@ class Solution
     vector<long long> printFibb(int n) 
     {
         //code here
+        vector<long long> dp(n,0);
+        dp[0] = dp[1] = 1;
         
-        if( n == 1 )
+        for(int i = 2; i < n; i++ )
         {
-            return {1};
+            dp[i] = dp[i -1] + dp[i - 2];
         }
         
-        if( n == 2 )
-        {
-            return {1,1};
-        }
-        long long prev = 1;
-        long long curr = 1;
-        long long next;
-        vector<long long > ans ;
-        ans.push_back( prev );
-        ans.push_back( curr );
-        
-        
-        while( n > 2 )
-        {
-            next = prev + curr;
-            prev = curr;
-            curr = next;
-            ans.push_back( next );
-            n--;
-        }
-        
-        return ans;
+        return dp;
     }
 };
 
