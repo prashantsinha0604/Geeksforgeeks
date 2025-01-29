@@ -38,46 +38,56 @@ struct Node {
 
 class Solution {
   public:
-    // Function to rotate a linked list.
     Node* rotate(Node* head, int k) {
         // Your code here
-        Node * i = head ;
-        Node * prev ;
-        Node * newTail = NULL;
-        Node * newHead = NULL ;
-        
-        int zeroCnt = 0 ;
-        int oneCnt = 1 ;
         int size = 0 ;
         
+        Node * i = head ;
         while( i )
         {
-            if( zeroCnt == k )
-            {
-                newHead = i ;
-            }
-            zeroCnt++;
-            
-            if( oneCnt == k )
-            {
-                newTail = i ;
-            }
-            oneCnt++;
-            prev = i ;
             size++;
-            
-            i = i -> next ;
+            i = i-> next ;
         }
+        
         if( size == k )
         {
             return head ;
         }
         
-        newTail -> next = NULL ;
-        prev -> next = head ;
+        k = k % size ;
+        if( k == 0 or head -> next == NULL ) return head ;
         
-        return newHead;
-    
+        int cnt = 0 ;
+        
+        Node * Nullnode  = nullptr;
+        Node *KthNode = head , * newHead ;
+        while( KthNode )
+        {
+            cnt++;
+            if( cnt == k )
+            {
+                break;
+            }
+            else
+            KthNode = KthNode -> next ;
+        }
+        
+        if(KthNode -> next != NULL )
+        {
+            newHead = KthNode -> next ;
+            KthNode -> next = Nullnode ;
+        }
+        
+        Node * j = newHead ;
+        
+        while( j -> next )
+        {
+            j = j -> next ;
+        }
+        
+        j -> next = head ;
+        
+        return newHead ;
     }
 };
 
@@ -119,6 +129,7 @@ int main() {
         Solution ob;
         head = ob.rotate(head, k);
         printList(head);
+        cout << "~\n";
     }
     return 1;
 }
